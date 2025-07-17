@@ -10,16 +10,10 @@ function App() {
   const user = useSelector(selectUser);
   return (
     <div className="app">
-      {user ? (
-        <>
-          {/* Sidebar */}
-          <Sidebar />
-          {/* Chat */}
-          <Chat />
-      </>
-      ) : (
-        <p>Sign in first</p>
-      )}
+      {/* Sidebar */}
+      <Sidebar />
+      {/* Chat */}
+      <Chat />
     </div>
   );
 }
