@@ -1,0 +1,60 @@
+/* Chat header*/
+.chatHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    color: var(--light-grey-color);
+}
+
+/* Chat header left section */
+.chatHeader__left-hash {
+    color: var(--light-grey-color);
+    font-size: 30px;
+    padding: 10px;
+}
+
+.chatHeader__left .chatHeader__left-name{
+    display: flex;
+    align-items: center;
+    color: var(--white-color);
+}
+
+/* Chat header right section */
+.chatHeader__right {
+    display: flex;
+    flex: 0.5;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Chat header right icons */
+.chatHeader__right .chatHeader__right-icon {
+    padding: 5px;
+    cursor: pointer;
+}
+
+.chatHeader__right .chatHeader__right-icon:hover {
+    color: var(--white-color);
+}
+
+/* Chat header search bar */
+.chatHeader__search {
+    display: flex;
+    align-items: center;
+    color: var(--light-grey-color);
+    background-color: var(--dark-grey-color);
+    border-radius: 3px;
+    padding: 3px;
+}
+
+.chatHeader__search .chatHeader__searchbar {
+    background-color: transparent;
+    color: var(--white-color);
+    outline-width: 0;
+    border: none;
+}
+
+.chatHeader__search-icon {
+    cursor: pointer;
+}

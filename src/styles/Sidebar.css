@@ -1,0 +1,102 @@
+/* ./component-styles/Sidebar.css */
+.sidebar{
+    display: flex;
+    flex-direction: column;
+    flex: 0.25;
+    height: 100vh;
+    background-color: var(--grey-color);
+}
+
+/* Top */
+.sidebar_top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: var(--grey-color);
+    color: var(--white-color);
+    border-bottom: 3px solid var(--dark-grey-color);
+}
+
+/* Sidebar channels */
+.sidebar_channels {
+    flex: 1;
+    background-color: var(--grey-color);
+    color: var(--white-color);
+    overflow-y: auto;
+}
+
+/* Channel header */
+.sidebar_channelsHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: var(--grey-color);
+    color: var(--light-grey-color);
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+}
+
+/* addChannel icon */
+.sidebar_addChannel{
+    cursor: pointer;
+}
+
+.sidebar_addChannel:hover {
+    color: var(--white-color);
+}
+
+/* Voice-Profile */
+.sidebar_voice,
+.sidebar_profile {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--light-grey-color);
+    padding: 10px;
+    border-top: 1px solid var(--light-grey-color);
+}
+
+/* Voice-Profile information */
+.sidebar_voiceInfo,
+.sidebar_profileInfo {
+    flex: 1;
+    padding: 10px;
+}
+
+/* Voice connection */
+.sidebar_conection {
+    font-size: smaller;
+}
+
+.sidebar_voiceIcon,
+.sidebar_voiceInfo .sidebar_conection {
+    color: var(--green-color);
+}
+
+.sidebar_stream {
+    font-size: x-small;
+}
+
+/* Voice-Profile icon */
+.sidebar_voiceIcons .sidebar_voice-icon,
+.sidebar_profileIcons .sidebar_profile-icon {
+    padding: 10px;
+}
+
+/* Profile information */
+.sidebar_profileInfo {
+    color: var(--white-color);
+}
+
+.sidebar_profileInfo {
+    font-size: small;
+}
+
+.sidebar_profileID {
+    font-size: small;
+}
