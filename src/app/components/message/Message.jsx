@@ -1,6 +1,6 @@
 import React from "react";
 import "./Message.css";
-import Icons, { Avatar } from "../../icons/Icon";
+import { Avatar } from "../../icons/Icon";
 
 function Message() {
   return (

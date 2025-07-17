@@ -1,0 +1,30 @@
+.signin {
+    display: grid;
+    place-items: center;
+    height: 100vh;
+    width: 100%;
+
+}
+
+.signin__button {
+    background-color: #3f0f40;
+    color: var(--white-color);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 800;
+    width: 300px;
+    
+}
+
+.signin__button:hover {
+    background-color: var(--dark-grey-color);
+    color: var(--green-color);
+}
+
+.signin__logo img {
+    object-fit: contain;
+    height: 150px;
+}

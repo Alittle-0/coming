@@ -2,8 +2,25 @@ import React from 'react'
 import '../styles/Sidebar.css'
 import Icons, { Avatar } from '../app/icons/Icon';
 import SidebarChannel from '../app/components/sidebarChannel/SidebarChannel';
+import { useDispatch } from 'react-redux';
+import { signOut } from '../app/features/userSlice';
 
 function Sidebar() {
+  const dispatch = useDispatch();
+
+  const handleLogout = async () => {
+    try {
+      await ApiService.logout();
+      dispatch(signOut());
+      console.log("Logout successful");
+    } catch (error) {
+      console.error("Logout error:", error);
+      // Even if API call fails, clear local state
+      localStorage.removeItem('accessToken');
+      dispatch(signOut());
+    }
+  };
+
   return (
     <div className='sidebar'>
       <div className='sidebar_top'>
@@ -52,7 +69,7 @@ function Sidebar() {
         <div className="sidebar_profileIcons">
           <Icons.Mic className="sidebar_profile-icon" />
           <Icons.Headset className="sidebar_profile-icon" />
-          <Icons.Settings className="sidebar_profile-icon" />
+          <Icons.Settings className="sidebar_profile-icon" onClick={handleLogout}/>
         </div>
       </div>
     </div>
