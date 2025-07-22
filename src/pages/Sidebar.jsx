@@ -4,14 +4,14 @@ import Icons, { Avatar } from '../app/icons/Icon';
 import SidebarChannel from '../app/components/sidebarChannel/SidebarChannel';
 import { useDispatch } from 'react-redux';
 import { signOut } from '../app/features/userSlice';
-import { ApiService } from "../app/services/apiServices";
+import apiService from "../app/services/apiServices";
 
 function Sidebar() {
   const dispatch = useDispatch();
 
   const handleLogout = async () => {
     try {
-      await ApiService.logout();
+      await apiService.logout();
       dispatch(signOut());
       console.log("Logout successful");
     } catch (error) {
