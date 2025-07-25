@@ -2,23 +2,20 @@ import React from 'react'
 import '../styles/Sidebar.css'
 import Icons, { Avatar } from '../app/icons/Icon';
 import SidebarChannel from '../app/components/sidebarChannel/SidebarChannel';
-import { useDispatch } from 'react-redux';
-import { signOut } from '../app/features/userSlice';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../app/features/userSlice';
 import apiService from "../app/services/apiServices";
 
 function Sidebar() {
-  const dispatch = useDispatch();
+
+  const user = useSelector(selectUser);
 
   const handleLogout = async () => {
     try {
       await apiService.logout();
-      dispatch(signOut());
       console.log("Logout successful");
     } catch (error) {
       console.error("Logout error:", error);
-      // Even if API call fails, clear local state
-      localStorage.removeItem('accessToken');
-      dispatch(signOut());
     }
   };
 
@@ -61,16 +58,16 @@ function Sidebar() {
       </div>
 
       <div className="sidebar_profile">
-        <Avatar className='sidebar_profileAvatar' />
+        <Avatar src={user.photo} className='sidebar_profileAvatar' onClick={handleLogout} />
         <div className="sidebar_profileInfo">
-          <p className="sidebar_profileName">Hung</p>
-          <p className="sidebar_profileID">1233456789</p>
+          <p className="sidebar_profileName">{user.username}</p>
+          <p className="sidebar_profileID">{user.id.substring(0,5)}</p>
         </div>
 
         <div className="sidebar_profileIcons">
           <Icons.Mic className="sidebar_profile-icon" />
           <Icons.Headset className="sidebar_profile-icon" />
-          <Icons.Settings className="sidebar_profile-icon" onClick={handleLogout}/>
+          <Icons.Settings className="sidebar_profile-icon"/>
         </div>
       </div>
     </div>

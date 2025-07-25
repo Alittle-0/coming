@@ -6,38 +6,78 @@ import SignIn from "./pages/SignIn";
 import { signIn, signOut, selectUser } from "./app/features/userSlice";
 import "./App.css";
 
-
 function App() {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
 
+  // Handle user state changes
   useEffect(() => {
-    // Check for stored token on app load
-    const token = localStorage.getItem('accessToken');
-    
-    if (token && !user) {
-      // You could validate the token here by making an API call
-      // For now, we'll just check if token exists
-      console.log("Token found, but no user data");
-      // You might want to fetch user data or validate token here
-    } else if (!token && !user) {
+    console.log("Current user state:", user);
+  }, [user]);
+
+  // Handle user login/logout events
+  useEffect(() => {
+    const handleUserLogin = (event) => {
+      const userData = event.detail;
+      dispatch(signIn(userData));
+      console.log("User signed in via event:", userData);
+    };
+
+    const handleUserLogout = () => {
       dispatch(signOut());
-      console.log("No token found, user signed out");
+      console.log("User signed out via event");
+    };
+
+    window.addEventListener("userLogin", handleUserLogin);
+    window.addEventListener("userLogout", handleUserLogout);
+
+    return () => {
+      window.removeEventListener("userLogin", handleUserLogin);
+      window.removeEventListener("userLogout", handleUserLogout);
+    };
+  }, [dispatch]);
+
+  // Token validation on app mount
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+
+    if (token) {
+      try {
+        const tokenData = JSON.parse(atob(token.split(".")[1]));
+        if (tokenData.exp * 1000 > Date.now()) {
+          console.log("Token is valid");
+          // If token is valid but no user, you might want to fetch user data
+          if (!user) {
+            // You could dispatch an action to fetch user data here
+            // dispatch(fetchUserFromToken(token));
+          }
+        } else {
+          localStorage.removeItem("accessToken");
+          if (user) {
+            dispatch(signOut());
+          }
+        }
+      } catch (error) {
+        localStorage.removeItem("accessToken");
+        if (user) {
+          dispatch(signOut());
+        }
+      }
+    } else if (user) {
+      dispatch(signOut());
     }
   }, [dispatch, user]);
 
   return (
     <div className="app">
-    {user ? (
-      <>
-      {/* Sidebar */}
-      <Sidebar />
-      {/* Chat */}
-      <Chat />
-      </>
-    ) : (
-      <SignIn />
-    )}
+      {user ? (
+        <>
+          <Sidebar />
+          <Chat />
+        </>
+      ) : (
+        <SignIn />
+      )}
     </div>
   );
 }
