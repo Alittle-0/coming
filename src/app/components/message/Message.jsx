@@ -2,16 +2,56 @@ import React from "react";
 import "./Message.css";
 import { Avatar } from "../../icons/Icon";
 
-function Message() {
+function Message({ message, user, timestamp }) {
+  const formatTimestamp = (timestamp) => {
+    if (!timestamp) return "";
+
+    const date = new Date(timestamp);
+    const now = new Date();
+    const isToday = date.toDateString() === now.toDateString();
+
+    if (isToday) {
+      return date.toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+    } else {
+      return date.toLocaleDateString([], {
+        month: "short",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+    }
+  };
+
   return (
     <div className="message">
-      <Avatar />
+      {/* Use user avatar if available, otherwise default Avatar */}
+      {user?.avatar ? (
+        <img
+          src={user.avatar}
+          alt={user.username}
+          className="message__avatar"
+          style={{
+            width: "40px",
+            height: "40px",
+            borderRadius: "50%",
+            objectFit: "cover",
+          }}
+        />
+      ) : (
+        <Avatar />
+      )}
+
       <div className="message__info">
         <p className="timestamp">
-          vuidrvjkd
-          <span className="message__info-timestamp">This is timestamp</span>
+          {user?.username || "Unknown User"}
+          <span className="message__info-timestamp">
+            {formatTimestamp(timestamp)}
+          </span>
         </p>
-        <p>this is message block</p>
+        <p>{message}</p>
       </div>
     </div>
   );
