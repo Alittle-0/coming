@@ -2,13 +2,13 @@ import React from "react";
 import "./ChatHeader.css";
 import Icons from "../../icons/Icon";
 
-function ChatHeader() {
+function ChatHeader({channelName}) {
   return (
     <div className="chatHeader">
       <div className="chatHeader__left">
         <p className="chatHeader__left-name">
           <span className="chatHeader__left-hash">#</span>
-          Channel name
+          {channelName}
         </p>
       </div>
 

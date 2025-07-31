@@ -3,22 +3,28 @@ import { createSlice } from "@reduxjs/toolkit";
 export const appSlice = createSlice({
   name: "app",
   initialState: {
-    channelId: null,
-    channelName: null,
+    currentServer: null,
+    servers: [],
   },
   reducers: {
-    setChannelId: (state, action) => {
-      state.channelId = action.payload; // Fixed: removed +=
+    setServers: (state, action) => {
+      state.servers = action.payload;
     },
-    setChannelName: (state, action) => {
-      state.channelName = action.payload; // Added this reducer
+    setCurrentServer: (state, action) => {
+      state.currentServer = action.payload;
     },
+    updateServerInList: (state, action) => {
+        const index = state.servers.findIndex(server => server._id === action.payload._id);
+        if (index !== -1) {
+          state.servers[index] = action.payload;
+        }
+      },
   },
 });
 
-export const { setChannelId, setChannelName } = appSlice.actions;
+export const { setServers, setCurrentServer, updateServerInList } = appSlice.actions;
 
-export const selectChannelId = (state) => state.app.channelId;
-export const selectChannelName = (state) => state.app.channelName;
+export const selectServers = (state) => state.app.servers;
+export const selectCurrentServer = (state) => state.app.currentServer;
 
 export default appSlice.reducer;

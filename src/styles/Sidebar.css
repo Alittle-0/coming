@@ -100,3 +100,48 @@
 .sidebar_profileID {
     font-size: small;
 }
+
+/* Sidebar servers */
+.sidebar_noServers {
+    color: #72767d;
+    font-size: 12px;
+    text-align: center;
+    padding: 8px;
+}
+
+.sidebar_servers {
+    padding: 10px 0;
+    border-bottom: 1px solid #2f3136;
+    margin-bottom: 10px;
+}
+
+.sidebar_serversList {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 0 12px;
+}
+
+.sidebar_server {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: #36393f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: bold;
+    color: #dcddde;
+}
+
+.sidebar_server:hover {
+    border-radius: 16px;
+    background-color: #5865f2;
+}
+
+.sidebar_server.active {
+    border-radius: 16px;
+    background-color: #5865f2;
+}

@@ -2,16 +2,25 @@ import React from "react";
 import "./Message.css";
 import { Avatar } from "../../icons/Icon";
 
-function Message() {
+function Message({ message, username, timestamp, avatar }) {
+  const formatTimestamp = (timestamp) => {
+    if (!timestamp) return "";
+    
+    const date = new Date(timestamp);
+    return date.toLocaleString();
+  };
+
   return (
     <div className="message">
-      <Avatar />
+      <Avatar src={avatar} />
       <div className="message__info">
         <p className="timestamp">
-          vuidrvjkd
-          <span className="message__info-timestamp">This is timestamp</span>
+          {username || "Unknown User"}
+          <span className="message__info-timestamp">
+            {formatTimestamp(timestamp)}
+          </span>
         </p>
-        <p>this is message block</p>
+        <p>{message || "No message content"}</p>
       </div>
     </div>
   );

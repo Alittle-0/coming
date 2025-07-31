@@ -15,7 +15,7 @@ import {
     AddCircle,
     GifBox,
     EmojiEmotions,
-    
+    Close,
     // Add other commonly used icons here
   } from '@mui/icons-material';
 
@@ -38,6 +38,7 @@ import {
     AddCircle,
     GifBox,
     EmojiEmotions,
+    Close,
     // Add more icons as needed
   };
   

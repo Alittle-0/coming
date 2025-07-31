@@ -1,4 +1,8 @@
 /* SidebarChannel.css */
+.sidebarChannel {
+    position: relative;
+}
+
 .sidebarChannel .sidebarChannel_name {
     display: flex;
     align-items: center;
@@ -17,4 +21,50 @@
 .sidebarChannel_hash {
     font-size: 30px;
     padding: 8px;
+}
+
+/* Tooltip styles */
+.sidebarChannel_tooltip {
+    position: absolute;
+    top: 0;
+    left: 30%;
+    margin-left: 10px;
+    background-color: var(--dark-grey-color);
+    color: var(--white-color);
+    padding: 12px;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 1000;
+    min-width: 200px;
+    max-width: 300px;
+    border: 1px solid var(--light-grey-color);
+    display: none;
+}
+
+.sidebarChannel:hover .sidebarChannel_tooltip {
+    opacity: 1;
+    display: block;
+    visibility: visible;
+}
+
+.tooltip_content h4 {
+    margin: 0 0 8px 0;
+    color: var(--white-color);
+    font-size: 16px;
+    border-bottom: 1px solid var(--light-grey-color);
+    padding-bottom: 4px;
+}
+
+.tooltip_content p {
+    margin: 4px 0;
+    font-size: 12px;
+    color: var(--light-grey-color);
+    line-height: 1.4;
+}
+
+.tooltip_content strong {
+    color: var(--white-color);
 }

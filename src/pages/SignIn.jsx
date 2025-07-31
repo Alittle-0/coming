@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Button, TextField, Box, Typography, Alert } from "@mui/material";
 import apiService from "../app/services/apiServices";
+import { signIn } from "../app/features/userSlice";
 import "../styles/SignIn.css";
 
 function SignIn() {
@@ -10,6 +12,7 @@ function SignIn() {
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setFormData({
@@ -24,7 +27,9 @@ function SignIn() {
     setError("");
 
     try {
-      await apiService.login(formData.username, formData.password);
+      const user = await apiService.login(formData.username, formData.password);
+
+      dispatch(signIn(user));
       console.log("Login successful");
     } catch (error) {
       console.error("Login error:", error);
