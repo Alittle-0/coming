@@ -245,7 +245,7 @@ class ApiService {
 
     try {
       const response = await fetch(
-        `${API_BASE_URL}/server/${serverId}/create`,
+        `${API_BASE_URL}/server/${serverId}/channels`,
         {
           method: "POST",
           headers: {
@@ -269,67 +269,6 @@ class ApiService {
     }
   }
 
-  async sendMessage(channelId, messageContent) {
-    const accessToken = localStorage.getItem("accessToken");
-
-    if (!accessToken) {
-      throw new Error("No access token found");
-    }
-
-    try {
-      const response = await fetch(`${API_BASE_URL}/messages/${channelId}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-        },
-        credentials: "include",
-        body: JSON.stringify({ message: messageContent }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to send message");
-      }
-
-      return response.json();
-    } catch (error) {
-      console.error("Error sending message:", error);
-      throw error;
-    }
-  }
-
-  async getMessages(channelId, limit = 50) {
-    const accessToken = localStorage.getItem("accessToken");
-
-    if (!accessToken) {
-      throw new Error("No access token found");
-    }
-
-    try {
-      const response = await fetch(
-        `${API_BASE_URL}/messages/${channelId}?limit=${limit}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
-          },
-          credentials: "include",
-        }
-      );
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to fetch messages");
-      }
-
-      return response.json();
-    } catch (error) {
-      console.error("Error fetching messages:", error);
-      throw error;
-    }
-  }
 }
 
 const apiService = new ApiService();
