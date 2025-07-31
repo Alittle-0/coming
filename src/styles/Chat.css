@@ -1,48 +1,94 @@
 .chat {
-    display: flex;
-    flex-direction: column;
-    flex: 0.75;
-    background-color: var(--grey-color);
-    height: 100vh;
+  display: flex;
+  flex-direction: column;
+  flex: 0.75;
+  background-color: var(--grey-color);
+  height: 100vh;
+  overflow: hidden; /* Prevent outer scrolling */
 }
 
-/* Chat messages */
+/* Chat messages container - this needs to be scrollable */
 .chat__messages {
-    flex: 1;
+  flex: 1;
+  overflow-y: auto; /* Enable scrolling */
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  /* Ensure proper scrolling behavior */
+  scroll-behavior: smooth;
+}
+
+/* Style the scrollbar (optional) */
+.chat__messages::-webkit-scrollbar {
+  width: 8px;
+}
+
+.chat__messages::-webkit-scrollbar-track {
+  background: var(--grey-color);
+}
+
+.chat__messages::-webkit-scrollbar-thumb {
+  background: var(--light-grey-color);
+  border-radius: 4px;
+}
+
+.chat__messages::-webkit-scrollbar-thumb:hover {
+  background: var(--white-color);
 }
 
 /* Chat footer */
 .chat__input {
-    color: var(--white-color);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 15px;
-    border-radius: 5px;
-    margin: 20px;
-    border: 1px solid var(--light-grey-color);
-    background-color: var(--dark-grey-color);
+  color: var(--white-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  border-radius: 5px;
+  margin: 20px;
+  border: 1px solid var(--light-grey-color);
+  background-color: var(--dark-grey-color);
+  flex-shrink: 0; /* Prevent input from shrinking */
 }
 
 /* Chat input form */
 .chat__inputForm input {
-    padding: 5px;
-    background: transparent;
-    width: 100%;
-    border: none;
-    outline-width: 0;
-    color: var(--white-color);
-    font-size: medium;
+  padding: 5px;
+  background: transparent;
+  width: 100%;
+  border: none;
+  outline-width: 0;
+  color: var(--white-color);
+  font-size: medium;
 }
 
 .chat__inputForm {
-    flex: 1;
+  flex: 1;
 }
 
 .chat__inputForm-button {
-    display: none;
+  display: none;
 }
 
 .chat__inputIcons-icon {
-    padding: 0 5px 0 5px;
+  padding: 0 5px 0 5px;
+}
+
+/* Loading and empty states */
+.chat__loading,
+.chat__empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  color: var(--light-grey-color);
+  text-align: center;
+}
+
+/* Typing indicator */
+.chat__typing {
+  padding: 10px;
+  color: var(--light-grey-color);
+  font-size: 12px;
+  font-style: italic;
 }
