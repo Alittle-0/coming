@@ -1,5 +1,5 @@
 const API_BASE_URL =
-  process.env.REACT_APP_BACKEND_BASE_URL;
+  process.env.REACT_APP_BACKEND_BASE_URL || "http://localhost:6001";
 
 console.log("API_BASE_URL:", API_BASE_URL);
 class ApiService {
