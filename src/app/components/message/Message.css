@@ -1,17 +1,39 @@
 .message {
     display: flex;
-    align-items: center;
-    padding: 20px;
+    align-items: flex-start; /* Align to top instead of center */
+    padding: 10px 0; /* Reduce padding */
     color: var(--white-color);
+    word-wrap: break-word; /* Handle long messages */
 }
 
 .message__info {
-    margin-left: 20px;
+    margin-left: 15px;
+    flex: 1; /* Take remaining space */
+    min-width: 0; /* Allow shrinking */
+}
 
+.message__info p:first-child {
+    margin: 0 0 5px 0; /* Space between username and message */
+}
+
+.message__info p:last-child {
+    margin: 0;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .message__info-timestamp {
     color: var(--light-grey-color);
-    margin-left: 20px;
-    font-size: x-small;
+    margin-left: 10px;
+    font-size: 12px;
+    font-weight: normal;
+}
+
+/* Avatar styles */
+.message__avatar {
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50% !important;
+    object-fit: cover !important;
+    flex-shrink: 0; /* Prevent avatar from shrinking */
 }

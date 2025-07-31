@@ -23,6 +23,15 @@ function Chat() {
   const previousChannelId = useRef(null);
   const typingTimeout = useRef(null);
   const messagesEndRef = useRef(null);
+  const messagesContainerRef = useRef(null);
+
+  // Improved auto-scroll function
+  const scrollToBottom = () => {
+    if (messagesContainerRef.current) {
+      const container = messagesContainerRef.current;
+      container.scrollTop = container.scrollHeight;
+    }
+  };
 
   // Connect to socket when component mounts
   useEffect(() => {
@@ -37,14 +46,19 @@ function Chat() {
 
   // Auto-scroll to bottom when messages change
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    // Small delay to ensure DOM is updated
+    const timer = setTimeout(() => {
+      scrollToBottom();
+    }, 100);
+
+    return () => clearTimeout(timer);
   }, [messages]);
 
   // Load messages when channel changes
   useEffect(() => {
     const loadChannelMessages = async () => {
       if (channelId && channelId !== previousChannelId.current) {
-        console.log(`Loading messages for channel: ${channelId}`); // Debug log
+        console.log(`Loading messages for channel: ${channelId}`);
 
         // Leave previous channel
         if (previousChannelId.current) {
@@ -57,17 +71,17 @@ function Chat() {
 
         // Load previous messages
         setLoading(true);
-        setMessages([]); // Clear previous messages
+        setMessages([]);
 
         try {
           const response = await socketService.fetchChannelMessages(channelId);
-          console.log("API Response:", response); // Debug log
+          console.log("API Response:", response);
 
           if (response.success && response.data) {
-            console.log(`Loaded ${response.data.length} messages`); // Debug log
+            console.log(`Loaded ${response.data.length} messages`);
             setMessages(response.data);
           } else {
-            console.log("No messages found or API error"); // Debug log
+            console.log("No messages found or API error");
             setMessages([]);
           }
         } catch (error) {
@@ -79,7 +93,6 @@ function Chat() {
       }
     };
 
-    // Only load if we have a channelId
     if (channelId) {
       loadChannelMessages();
     }
@@ -88,7 +101,7 @@ function Chat() {
   // Listen for new messages
   useEffect(() => {
     const handleNewMessage = (messageData) => {
-      console.log("New message received:", messageData); // Debug log
+      console.log("New message received:", messageData);
       setMessages((prev) => [...prev, messageData]);
     };
 
@@ -106,7 +119,6 @@ function Chat() {
     };
 
     const handleMessageSaved = (data) => {
-      // Update the temporary message with the saved message data
       setMessages((prev) =>
         prev.map((msg) =>
           msg.id === data.tempId
@@ -118,7 +130,6 @@ function Chat() {
 
     const handleMessageError = (data) => {
       console.error("Message failed to save:", data.error);
-      // Optionally show user notification
     };
 
     socketService.onNewMessage(handleNewMessage);
@@ -129,7 +140,6 @@ function Chat() {
 
     return () => {
       socketService.offNewMessage();
-      // Clean up other listeners as needed
     };
   }, []);
 
@@ -177,17 +187,7 @@ function Chat() {
   if (!channelId) {
     return (
       <div className="chat">
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100%",
-            color: "var(--light-grey-color)",
-          }}
-        >
-          Select a channel to start chatting
-        </div>
+        <div className="chat__empty">Select a channel to start chatting</div>
       </div>
     );
   }
@@ -196,27 +196,13 @@ function Chat() {
     <div className="chat">
       <ChatHeader channelName={channelName} />
 
-      <div className="chat__messages">
+      <div className="chat__messages" ref={messagesContainerRef}>
         {loading ? (
-          <div
-            style={{
-              textAlign: "center",
-              padding: "20px",
-              color: "var(--light-grey-color)",
-            }}
-          >
-            Loading messages...
-          </div>
+          <div className="chat__loading">Loading messages...</div>
         ) : (
           <>
             {messages.length === 0 ? (
-              <div
-                style={{
-                  textAlign: "center",
-                  padding: "20px",
-                  color: "var(--light-grey-color)",
-                }}
-              >
+              <div className="chat__empty">
                 No messages yet. Start the conversation!
               </div>
             ) : (
@@ -232,19 +218,13 @@ function Chat() {
 
             {/* Typing indicator */}
             {typingUsers.length > 0 && (
-              <div
-                style={{
-                  padding: "10px",
-                  color: "var(--light-grey-color)",
-                  fontSize: "12px",
-                }}
-              >
+              <div className="chat__typing">
                 {typingUsers.map((u) => u.username).join(", ")}{" "}
                 {typingUsers.length === 1 ? "is" : "are"} typing...
               </div>
             )}
 
-            {/* Auto-scroll anchor */}
+            {/* Invisible element for scrolling */}
             <div ref={messagesEndRef} />
           </>
         )}
